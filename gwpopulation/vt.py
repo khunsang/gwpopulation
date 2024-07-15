@@ -98,7 +98,10 @@ class GridVT(_BaseVT):
 
     def __call__(self, parameters):
         self.model.parameters.update(parameters)
-        vt_fac = self.model.prob(self.data) * self.vts
+        try:
+            vt_fac = self.model.prob_vt(self.data) * self.vts
+        except:
+            vt_fac = self.model.prob(self.data) * self.vts
         for ii in range(self.ndim):
             vt_fac = xp.trapz(
                 vt_fac, self.values[self.axes[self.ndim - ii - 1]], axis=-1

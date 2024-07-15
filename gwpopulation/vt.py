@@ -85,6 +85,9 @@ class GridVT(_BaseVT):
     """
 
     def __init__(self, model, data):
+        for key in ['scalar_calibration', 'linear_calibration', 'quadratic_calibration']:
+            if key in list(data.keys()):
+                data.pop(key)
         self.vts = data.pop("vt")
         super(GridVT, self).__init__(model=model, data=data)
         self.values = {key: xp.unique(self.data[key]) for key in self.data}
